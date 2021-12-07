@@ -1,4 +1,4 @@
-# 5/5 FINALE
+# FINALE | Opraveno
 # def Textovy_analyzator():
 
 '''
@@ -7,7 +7,7 @@
 TEXTS = [
 
     '''Situated about 10 miles west of Kemmerer,
-    Fossil Butte is a ruggedly impressive
+    Fossil Butte is . ,  a ruggedly impressive
     topographic feature that rises sharply
     some 1000 feet above Twin Creek Valley
     to an elevation of more than 7500 feet
@@ -35,8 +35,7 @@ TEXTS = [
     garpike and stingray are also present.'''
 ]
 
-text1 = str(TEXTS[0].split())
-text1 = text1.strip("!@#$%^&*()_+}{{}:<>'':\n,?")
+
 
 odd = 80 * "-"
 
@@ -54,31 +53,39 @@ heslo = input("Zadej heslo: ")
 print(odd)
 if prihlaseni.get(jmeno) == (heslo):
     print("Vytej! Vyber si jeden ze 3 textu pro analyzu. ")
-    vyber = input("Napis cislo textu ktery chces analyzovat. Momentalne mame 3 clanky. (1,2,3): ")
 else:
     print("Zadane udaje neodpovidaji. Provedte kontrolu vasich udaju a zkuste to znova.")
-    konec = "132465798"
-    if konec.isnumeric:
-        exit()
+    quit()
 
+vyber = input("Napis cislo textu ktery chces analyzovat: ")
 print(odd)
-vyber = int(vyber)
-# Pocet slov
-if vyber == 1:
-    vyber -= 1
-elif vyber == 2:
-    vyber -= 1
-elif vyber == 3:
-    vyber -= 1
-else:
-    print("Zadane udaje neodpovidaji. Provedte kontrolu vasich udaju a zkuste to znova.")
-    konec = "132465798"
-    if konec.isnumeric:
-        exit()
 
+if vyber.isnumeric():
+    vyber = int(vyber)
+    vyber -= 1
+    if vyber in range(len(TEXTS)+1):
+        print(odd)
+    else:
+        print("Zadana hodnota je mimo rozsah! Zkus to znova.")
+        quit()
+else:
+    print("Zadana hodnota neni cislo! Zkus to znova.")
+    quit()
 # print("provadime rozbor textu." print(vyber))
-textuprava = [nahrada.strip(",./';][- =\n<>?:}{+_") for nahrada in (TEXTS[vyber].split())]
+textuprava = [nahrada.strip("!\"#$%/:;<=>?@[\\]&'()*+, -.^_`{|}~") for nahrada in (TEXTS[vyber].split())]
+uprava = []
+for slova in textuprava:
+    if slova != "":
+        uprava.append(slova)
+textuprava = uprava
+
+
+
+
+
+
 print("celkovy pocet slov: ", len(textuprava))
+
 
 # Pocet slov 'Velke' pismeno
 for slovo in TEXTS[vyber].split(" "):
@@ -105,11 +112,13 @@ print("Slov psanych pouze malym pismem: ", M_SLOVA)
 print("Cisel v textu: ", cisla)
 print("Soucet cisel v textu: ", suma)
 # 6
+print(odd)
 odd2 = "+--++-.-.-.-.-.-++--+"
 print("Nejcastejsi slova v textu: ")
 cista_slova = list()
 for slovo in TEXTS[vyber].split():
     cista_slova.append(slovo.strip(",./;'[]<''>? :}{"";").lower())
+
 
 slova: dict = dict()
 
@@ -136,10 +145,10 @@ for index, tupl in enumerate(sorted(vysledky, reverse=True), 1):
     )
 
 # len
-cista_slova = list()
-for slovo in TEXTS[vyber].split():
-    cista_slova.append(slovo.strip(",./;'[]<>? '':}{"";").lower())
-# words = ['ahoj', 'hoj', '1', '4', 'west', 'of']
+#cista_slova = textuprava
+#Tohle neni potreba - - -for slovo in TEXTS[vyber].split():
+    #cista_slova.append(slovo.strip(",./;'[]<>? '':}{"";").lower())
+    # words = ['ahoj', 'hoj', '1', '4', 'west', 'of']
 
 pocet = len(TEXTS[vyber].split())
 print(odd)
@@ -147,7 +156,7 @@ print("LEN|     OCCURENCES     |NR.")
 print(odd)
 
 words_occurrence = {}
-for word in cista_slova:
+for word in textuprava:
     len_w = len(word)
     if len_w not in words_occurrence:
         words_occurrence[len_w] = 0
