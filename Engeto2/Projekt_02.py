@@ -157,10 +157,8 @@ def switch_player(board):
     global currentPlayer
     if currentPlayer == "X":
         currentPlayer = "O"
-        print("Your turn player O.")
     else:
-        currentPlayer = "X"
-        print("Your turn player X.")
+        currentPlayer = "X"        
 
 
 # AI variant
