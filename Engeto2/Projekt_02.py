@@ -1,25 +1,23 @@
 import random
 
+#V2
 
 
 
-# zkusime_pridat_AI
-# Game_board
+# constant""
 board = ["-", "-", "-",
-         "-", "-", "-",
-         "-", "-", "-", ]
-currentPlayer = "X"
+        "-", "-", "-",
+        "-", "-", "-", ]
+# need global
 winner = None
-gameRunning = True
-line = (" |---+---+---|")
-odd = ("=============================")
-inp = int()
-End = 1
 mod = None
+gameRunning = True
+currentPlayer = "X"
 
 
 # Welcome
 def welcome():
+    odd = ("=============================")
     print(odd)
     print("Hi! Welcome to Tic Tac Toe")
     print("""GAME RULES:
@@ -55,13 +53,17 @@ def game_set():
         return mod
     else:
         mod = "konec"
+        while mod == "konec":
+            print("Frong choice! Must be '1' or '2' ! ")
+            game_set()
 
 
-welcome()
+
 
 
 # print_game_board
-def print_board(board):
+def print_board():
+    line = (" |---+---+---|")
     print(" | " + board[0] + " | " + board[1] + " | " + board[2] + " | ")
     print(line)
     print(" | " + board[3] + " | " + board[4] + " | " + board[5] + " | ")
@@ -69,7 +71,8 @@ def print_board(board):
     print(" | " + board[6] + " | " + board[7] + " | " + board[8] + " | ")
 
 
-def player_input(board):
+def player_input():
+    inp = int()
     # Get position from player
     print(currentPlayer + "'s turn.")
     inp = input("Choose a position from 1-9: ")
@@ -95,7 +98,7 @@ def player_input(board):
 
 
 # check for win, tie or lose
-def check_horizont(board):
+def check_horizont():
     global winner
     if board[0] == board[1] == board[2] and board[0] != "-":
         winner = board[0]
@@ -108,7 +111,7 @@ def check_horizont(board):
         return True
 
 
-def check_row(board):
+def check_row():
     global winner
     if board[0] == board[3] == board[6] and board[0] != "-":
         winner = board[0]
@@ -121,7 +124,7 @@ def check_row(board):
         return True
 
 
-def check_dia(board):
+def check_dia():
     global winner
     if board[0] == board[4] == board[8] and board[0] != "-":
         winner = board[0]
@@ -131,63 +134,66 @@ def check_dia(board):
         return True
 
 
-# check for TIE
-def check_tie(board):
-    if "-" not in board:
-        print_board(board)
+
+
+
+# Check for win/tie
+def check_win_tie():
+    global gameRunning
+    if check_dia() or check_row() or check_horizont():
+        print_board()
+        print(f"We have a WINNER!  player {winner} won")
+        gameRunning = False
+        quit()
+    elif "-" not in board:
+        print_board()
         print(" AH! is a TIE!")
         gameRunning = False
         return True
     else:
         return False
 
-
-# Check for win
-def check_win(board):
-    global gameRunning
-    if check_dia(board) or check_row(board) or check_horizont(board):
-        print_board(board)
-        print(f"We have a WINNER!  player {winner} won")
-        gameRunning = False
-        quit(gameRunning)
-
-
-# switch the plazer
-def switch_player(board):
+# switch the player
+def switch_player():
     global currentPlayer
     if currentPlayer == "X":
         currentPlayer = "O"
     else:
-        currentPlayer = "X"        
+        currentPlayer = "X"
+
+
+
+
 
 
 # AI variant
 def AI(board):
-    while currentPlayer == "O":
+    if mod == "2":
+      while currentPlayer == "O":
         move = random.randint(0, 8)
         if board[move] == "-":
             board[move] = "O"
-            switch_player(board)
+            switch_player()
+            if gameRunning == False:
+              break
 
+#start
 
 # Option_control
-game_set()
-while mod == "konec":
-    print("Frong choice! Must be '1' or '2' ! ")
-    game_set()
 
-# check_for_win_tie
-while gameRunning:
-    print_board(board)
-    player_input(board)
-    check_win(board)
-    if gameRunning == False:
-        break
-    check_tie(board)
-    switch_player(board)
-    if mod == "2":
-        AI(board)
-    check_win(board)
-    if gameRunning == False:
-        break
-    check_tie(board)
+
+
+
+def game():
+    welcome()
+    game_set()
+    while gameRunning:
+      print_board()
+      player_input()
+      check_win_tie()
+      switch_player()
+      AI(board)
+
+
+if __name__ == "__main__":
+    game()
