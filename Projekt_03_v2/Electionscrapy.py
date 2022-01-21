@@ -12,13 +12,13 @@ def click():
         filename = sys.argv[2]
         filename += ".csv"
         soup = get_soup(url)
-        """Stahuji data voleb."""
+        #Stahuji data voleb
         municipalities = get_municipalities_list(get_municipality_names(soup), get_numbers_and_links(soup))
         try:
             header = get_csv_header(url, municipalities[0][2])
         except (IndexError, TypeError) as err:
             print()
-            print("Jejda! Nepodadilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
+            print("Jejda! Nepodařilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na: random_mail@CZ_volby.cz")
             print("Chyba ! ! !", err)
         else:
             table_data = []
@@ -65,7 +65,7 @@ def get_soup(url):
         return BS(request.text, "html.parser")
     except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema) as err:
         print()
-        print("Jejda! Nepodadilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
+        print("Jejda! Nepodařilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
         print("Chyba ! ! ! ")
         print(err)
         exit()
@@ -99,7 +99,7 @@ def get_numbers_and_links(soup):
                     nums_and_links.append((td.get_text(), td.a["href"]))
         return nums_and_links
     except TypeError as err:
-        print("Jejda! Nepodadilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
+        print("Jejda! Nepodařilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
         print("Chyba ! ! !:", err)
         exit()
 
@@ -111,7 +111,7 @@ def get_municipalities_list(names, nums_and_links):
         print(municipalities)
         return municipalities
     except ValueError as err:
-        print("Jejda! Nepodadilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
+        print("Jejda! Nepodařilo se. Zkontroluj odkaz a nazev slozky ktera se ma vytvorit a zkus to znova. V pripade stale opakujici se chybi nam napis na :random_mail@CZ_volby.cz")
         print("Chyba ! ! !:", err)
         exit()
 
@@ -129,7 +129,7 @@ def write_csv(header, table_data, output_file):
             writer.writerow(header)
         writer.writerows(table_data)
     print()
-    print(f"Slozka {output_file} vytvorena.")
+    print(f"Složka {output_file} vytvořena.")
 
 
 if __name__ == '__main__':
